@@ -1,0 +1,181 @@
+---
+title: "SCEM Final Coursework"
+subtitle: "Task II"
+author: "YOUR_NAME (YOUR_STUDENT_NUMBER)"
+output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+*****
+
+## IMPORTANT NOTES: 
+- **DO NOT** change the code block names. Enter your solutions to each question into the predefined code blocks. 
+- **Don't forget to replace the placeholder value in code block "Setup" by your valid student ID number.**
+- If you want to use any packages, add their names to the vector `required.packages` in the code block "Setup". That code block will 
+automatically install those packages (if needed) and load them. Any other calls to `install.packages()`, `library()` or `require()` may result in zero marks for the activity where it happens.
+- Make sure that the data files *df.rds* and *df_holdout.rds* are located in the same folder as this file, _Task02.Rmd_.
+- Instructions for this task are provided in blue text below. Your solution should NOT be added within those text boxes, and should NOT be in blue text. **During marking, all the text within the text blocks below, with names starting with "prompt", will be removed and not visible to the marker.**
+
+```{r ID, echo=FALSE, message=FALSE, warning=FALSE}
+## We will use your student ID as the seed for the random number generator.
+MY_STUDENT_ID <- "ABCDEF" # <-- Replace "ABCDEFG" by your student ID number (as an integer, i.e., without quotes).
+```
+
+```{r Setup, echo=FALSE, message=FALSE, warning=FALSE}
+force_reinstall_everything <- FALSE ## <--- change to TRUE to force a reinstall of 
+                                    ## all packages listed in allowed.packages
+
+## ADD ANY REQUIRED PACKAGES TO THE VECTOR BELOW
+## Note: tidyverse includes:  ggplot2, dplyr, tidyr, readr, purrr, tibble, 
+##                            stringr, forcats, and lubridate.
+allowed.packages <- c("tidyverse", 
+                      "tidymodels", 
+                      "recipes", 
+                      "parsnip", 
+                      "bonsai", 
+                      "healthyR.ai", 
+                      "knitr")
+
+
+## DO NOT CHANGE ANYTHING ELSE IN THIS CODE BLOCK
+for (i in seq_along(allowed.packages)){
+  if(!(allowed.packages[i] %in% installed.packages()[, 1]) || force_reinstall_everything){
+    install.packages(allowed.packages[i], 
+                     dependencies = c("Depends", "Imports"),
+                     repos = "https://cloud.r-project.org")
+  }
+  library(allowed.packages[i], character.only = TRUE)
+}
+
+knitr::opts_chunk$set(echo = TRUE, collapse=TRUE)
+ignore <- runif(1) # To initialise the PRNG
+
+cat("\nList of allowed packages (pre-loaded):\n ", paste(allowed.packages, collapse="\n  "))
+```
+
+```{r checkID, echo=FALSE}
+if(!is.numeric(MY_STUDENT_ID)){
+  stop("MY_STUDENT_ID MUST BE YOUR VALID NUMERIC ID.")
+} 
+```
+
+*****
+
+:::{#prompt .message style="color: blue;"}
+In this task you will build a full predictive pipeline for the problem described in the coursework specs. Please read each activity carefully and follow the instructions to complete your coursework.
+
+Make sure that the data file **df.rds** is placed in the same folder as this Task02.Rmd file. The data that you can use for model development in this task will then be automatically loaded and set up for you, and stored into a dataframe variable called `df`.
+:::
+
+
+```{r load_data, echo = FALSE}
+## DO NOT CHANGE ANYTHING IN THIS CODE BLOCK
+set.seed(MY_STUDENT_ID)
+df <- readRDS("df.rds") %>% sample_frac(0.6, replace = FALSE)
+```
+
+*****
+
+## 1. Exploratory Data Analysis
+:::{#prompt .message style="color: blue;"}
+**Note**: It is expected that this section should result in no more than 600-ish words (possibly less; not counting the code blocks).
+
+Add here your exploratory data analysis. Your solution should include both your code (which markers must be able to run independently) and your rationale for each exploratory step. In general, your EDA steps should include:
+
+- A short justification of what a given plot or statistical summary is intended to reveal about the data.
+
+- A code block implementing your EDA step.
+
+At the end of your EDA section, you should also include a short commentary on what your data exploration revealed about the data, and which pre-processing steps may be required based on that.
+
+You can use as many code blocks as needed, but don't overdo it (remember - everything needs to have a proper rationale). 
+:::
+
+*****
+
+## 2. Data preprocessing and feature engineering
+
+:::{#prompt .message style="color: blue;"}
+**Note**: It is expected that this section should result in no more than 400-ish words (possibly less; not counting the code blocks). 
+
+Add here your data pre-processing and feature selection/engineering steps. Your solution should include both your code (which markers must be able to run independently) and your rationale. In general, your steps should include:
+
+- A short justification of which insight from your EDA is motivating a given data transformation.
+
+- A code block implementing your pre-processing step.
+
+**In addition** to the regular data transformations emerging from the insights you gathered during EDA, this section must contain the  splitting off of a test set that you'll use later for final performance assessment  (check the CW specs for details).
+
+At the end of this section you should also include a short commentary on what changes the pre-processing has induced in your data (i.e., what did the data "look like" before this step vs. what it "looks like" afterwards.
+
+You can use as many code blocks as needed, but don't overdo it (remember - everything needs to have a proper rationale). If you compare different pre-processing options, make sure to make it clear, and to indicate at the end which option you selected, and why. 
+
+**Note**: In this section you'll be basically defining which data transformations you will later incorporate into your predictive pipeline. When you build the pipeline in the next section, you'll encapsulate all those steps (together with the model) into a single object that you can fit and deploy as a single unit.
+:::
+
+
+*****
+
+## 3. Modelling
+
+:::{#prompt .message style="color: blue;"}
+**Note**: It is expected that this section should result in no more than 400-ish words (possibly less; not counting the code blocks).
+
+Add here your modelling steps. Your solution should include both your code (which markers must be able to run independently) and your rationale. This section must include:
+
+- The fitting of a preliminary model on your preprocessed training data (to estimate some baseline performance level and to make sure your data is ready for modelling). Make this a simple model - logistic regression, decision trees or kNN are good options (but other may be used instead, if you prefer).
+
+- The building of a predictive pipeline encapsulating all the learned/learnable aspects of your solution. This should result in a pipeline-type object that uses your raw training data (post EDA and test set splitting, but prior to any preprocessing), fits all your preprocessing transformations (incl. dimensionality reduction) and the predictive model using that data, and can then be used to ingest your test data (or any new data in the same format) and generate predictions for each entry. 
+
+Please refer to the CW specs for other requirements of this step (including, e.g., the addition of a dimensionality reduction step into your pipeline).
+
+You can use as many code blocks as needed, but don't overdo it (remember - everything needs to have a proper rationale). If you compare different models, make sure to make it clear, and to indicate at the end which pipeline option is your final selected one.
+:::
+
+
+*****
+
+## 4. Model assessment
+
+:::{#prompt .message style="color: blue;"}
+**Note**: It is expected that this section should result in no more than 100-ish words (possibly less; not counting the code blocks).
+
+This is a short section in which you must estimate the generalisation performance of your model on the test set that you isolated at the start of your Data preprocessing step. It is also a chance for you to ensure that your pipeline object can take in new data and return the required predictions.
+
+Use your pipeline to generate predictions for your test set, and calculate the observed performance using the $F_1$-score as your main performance indicator. You can also additionally report other performance metrics if you think it's relevant.
+
+You can use as many code blocks as needed, but it's likely that this section can be completed with a single one. Make sure that your performance indicators are clearly echoed, so that a reader can easily check if after re-running your script. Add a short comment on the observed performance (is it good? Is it poor? Remember that you're not being assessed on the performance of your models, but on the soundness of your approach).
+:::
+
+*****
+
+## 5. Model deployment
+
+:::{#prompt .message style="color: blue;"}
+**Note**: This section is not expected to have much text in it, only the code and the results.
+
+Finally, in this section you'll generate predictions for some data for which you do not know the class labels. This simulates the real-life scenario in which your model needs to be deployed to generate new predictions for new, unknown data (after all, if the labels were known, we wouldn't need a model).
+
+Make sure that the data file __df_holdout.rds__ is placed in the same folder as this Task02.Rmd file. The new data will then be automatically loaded and set up for you, and stored into a dataframe variable called `df_holdout`, with the same columns as the original `df` that was loaded at the start of this task.
+
+- Use your fitted pipeline to generate predictions for this new data.
+
+- Build a new data frame called containing the following columns:
+    - `Info_PepID` (taken from df_holdout)
+    - `Info_pos`  (taken from df_holdout)
+    - `Predicted_class` (with the predictions produced by your pipeline)
+
+- Save your predictions dataframe to a file called __mypreds.rds__. You will be able to submit this file, and it will be used to give you some feedback on the actual performance of your pipeline on new data.
+:::
+
+```{r load_holdout, echo = FALSE}
+## DO NOT CHANGE ANYTHING IN THIS CODE BLOCK
+df_holdout <- readRDS("df_holdout.rds")
+```
+
+*****
+*****
+
+### =========== End of Task II ===========

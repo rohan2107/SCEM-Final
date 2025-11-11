@@ -1,0 +1,124 @@
+---
+title: "SCEM Final Coursework"
+subtitle: "Task I"
+output: html_document
+---
+```{r ID, echo=FALSE, message=FALSE, warning=FALSE}
+#' Required variables: MY_STUDENT_ID (numeric)
+#' Required plots: 
+
+```
+
+```{r Setup, echo=FALSE, message=FALSE, warning=FALSE}
+#' Required variables: 
+#' Required plots: 
+```
+
+```{r checkID, echo=FALSE}
+#' Required variables: 
+#' Required plots: 
+```
+
+*****
+
+```{r gen_exp_params1, echo=FALSE}
+#' Required variables: exp_pars (list)
+#' Required plots: 
+```
+
+```{r gen_methods, echo = FALSE}
+#' Required variables: methods(list); method.names (character)
+#' Required plots: 
+```
+
+```{r Q1_1_b}
+#' Required variables: myres (data.frame)
+#' Required plots: 
+```
+
+```{r Q1_1_c_ci}
+#' Required variables: myCIs01 (data.frame)
+#' Required plots: 
+```
+
+```{r Q1_1_c_plot, fig.align='center'}
+#' Required variables: 
+#' Required plots: pointrange CIs
+```
+
+```{r Q1_1_d_code}
+#' Required variables: mytest01 (aov)
+#' Required plots: 
+```
+
+```{r Q1_1_e_code, fig.align='center'}
+#' Required variables: 
+#' Required plots: residual plots
+```
+
+
+```{r Q1_1_f_mcp}
+#' Required variables: myMHT1 (glht)
+#' Required plots: 
+```
+
+```{r Q1_1_f_ci}
+#' Required variables: myCIs02 (confint.glht)
+#' Required plots: 
+```
+
+```{r Q1_1_g_best}
+#' Required variables: best_method (character)
+#' Required plots: 
+```
+
+
+```{r Q1_1_g_topcomparison}
+#' Required variables: topComparison (data.frame)
+#' Required plots: 
+```
+
+```{r Q1_1_g_cohenD}
+#' Required variables: CohenD (numeric)
+#' Required plots: 
+```
+
+```{r gen_exp_params1_replay, echo=FALSE}
+#' Required variables: exp_pars (list)
+#' Required plots: 
+```
+
+```{r Q1.2.b}
+#' Required variables: nprobs (numeric)
+#' Required plots: 
+```
+
+```{r gen_problems, echo = FALSE}
+#' Required variables: problems (list); problem.names (character)
+#' Required plots: 
+```
+
+```{r Q1_2_c}
+#' Required variables: myres2 (data.frame)
+#' Required plots: 
+```
+
+```{r Q1_2_d_code}
+#' Required variables: mytest02 (aov)
+#' Required plots: 
+```
+
+```{r Q1_2_e_mcp}
+#' Required variables: myMHT2 (glht)
+#' Required plots: 
+```
+
+```{r Q1_2_e_ci}
+#' Required variables: myCIs03 (confint.glht)
+#' Required plots: 
+```
+
+```{r 1_2_f_final}
+#' Required variables: best_final (character)
+#' Required plots: 
+```

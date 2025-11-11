@@ -1,0 +1,488 @@
+---
+title: "SCEM Final Coursework"
+subtitle: "Task I"
+author: "YOUR_NAME (YOUR_STUDENT_NUMBER)"
+output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+*****
+
+## IMPORTANT NOTES: 
+- **DO NOT** change the code block names. Enter your solutions to each question into the predefined code blocks. 
+- **DO NOT** add calls to `install.packages()` or load any additional packages in your code blocks. Calls to `install.packages()` may result in zero marks for the activity where it happens.
+- **DO NOT** load any additional packages. All packages allowed and required for this coursework are already loaded in the **Setup** code block. Use of other packages may result in execution errors when marking, which can result in zero marks for one or more activities.
+- **Don't forget to replace the placeholder value in code block "ID" by your valid student ID number.**
+- Instructions for this task are provided in blue text below. Your solution should NOT be added within those text boxes, and should NOT be in blue text. **During marking, all the text within the text blocks below, with names starting with "prompt", will be removed and not visible to the marker.**
+
+```{r ID, echo=FALSE, message=FALSE, warning=FALSE}
+## We will use your student ID as the seed for the random number generator.
+MY_STUDENT_ID <- "ABCDEF" # <-- Replace "ABCDEFG" by your student ID number (as an integer, i.e., without quotes).
+```
+
+```{r Setup, echo=FALSE, message=FALSE, warning=FALSE}
+force_reinstall_everything <- FALSE ## <--- change to TRUE to force a reinstall of 
+                                    ## all packages listed in allowed.packages, plus
+                                    ## the ExpDE assessment package
+
+force_install_ExpDE <- FALSE ## <--- change to TRUE if you need to force a
+                             ## reinstall of ExpDE (e.g., in case there are 
+                             ## bug fixes after the release of the CW).
+
+
+## DO NOT CHANGE ANYTHING ELSE IN THIS CODE BLOCK
+allowed.packages <- c("ggplot2", "multcomp", "devtools", "dplyr", "tidyr", "knitr")
+
+for (i in seq_along(allowed.packages)){
+  if(!(allowed.packages[i] %in% installed.packages()[, 1]) || force_reinstall_everything){
+    install.packages(allowed.packages[i], 
+                     dependencies = c("Depends", "Imports"),
+                     repos = "https://cloud.r-project.org")
+  }
+  library(allowed.packages[i], character.only = TRUE)
+}
+
+# Install assessment package "ExpDE" directly from github repository
+if(!("ExpDE" %in% installed.packages()[, 1]) || force_install_ExpDE || force_reinstall_everything){
+  devtools::install_github("fcampelo/ExpDE")
+}
+library("ExpDE", character.only = TRUE)
+
+knitr::opts_chunk$set(echo = TRUE, collapse=TRUE)
+ignore <- runif(1) # To initialise the PRNG
+
+cat("\nList of allowed packages (pre-loaded):\n", paste(allowed.packages, collapse="\n "), "\n ExpDE")
+```
+
+```{r checkID, echo=FALSE}
+if(!is.numeric(MY_STUDENT_ID)){
+  stop("MY_STUDENT_ID MUST BE YOUR VALID NUMERIC ID.")
+} 
+```
+
+*****
+
+:::{#prompt .message style="color: blue;"}
+In this task you will design, run, and analise an experiment comparing different 
+configurations of the DE algorithm for a class of problems of interest. 
+Here are the required statistical parameters for your experiment:
+
+```{r gen_exp_params1, echo=FALSE}
+## DO NOT CHANGE ANYTHING IN THIS CODE BLOCK
+## Running this code block will determine the desired statistical parameters 
+## of your comparative experiment.
+exp_pars <- get_exp_params_1(MY_STUDENT_ID)
+
+```
+
+Here are the methods you will compare in your experiment. You will be able to 
+pass method names directly to the data-generating function later in this 
+task.
+
+```{r gen_methods, echo = FALSE}
+## DO NOT CHANGE ANYTHING IN THIS CODE BLOCK
+methods <- gen_methods(MY_STUDENT_ID)
+method.names <- sapply(methods, \(x) x$MethodName)
+
+```
+:::
+
+*****
+
+# Question 1.1
+
+
+### 1.1.a.
+:::{#prompt .message style="color: blue;"}
+Enter the statistical hypotheses of your initial (omnibus) test for this task in the text block below. Provide a brief (less than 150 words) description of what is being tested.
+:::
+
+:::{#Q1_1_a .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
+Some text here...
+
+$H_0:$
+
+$H_1:$
+:::
+
+*****
+
+### 1.1.b. 
+:::{#prompt .message style="color: blue;"}
+The name of the problem you should use for this item is automatically generated and stored in a variable called `my.problem`. 
+
+```{r, echo=FALSE}
+## DO NOT CHANGE ANYTHING IN THIS CODE BLOCK
+my.problem <- (paste0("Prob.", MY_STUDENT_ID, ".999"))
+```
+Below is an example of how to generate a single observation for your first method on the test problem `my.problem`. 
+
+```{r}
+## DO NOT CHANGE ANYTHING IN THIS CODE BLOCK
+x <- ExpDE2(method.name = method.names[1], problem.name = my.problem)
+my_obs <- log(x)
+my_obs
+```
+
+Adapt this code to generate the necessary number of observations (defined in your experimental parameters) for all of your test methods. Store your observations in a tidy data frame named `myres`, containing one observation per row and the following columns:
+
+- `Method` (containing the method name)
+- `Value` (containing the observation)
+
+Your data frame `myres` should have (nruns x number of methods) rows.
+
+:::
+
+
+```{r Q1_1_b}
+set.seed(MY_STUDENT_ID) ## <--- DO NOT CHANGE THIS LINE
+
+# ADD YOUR CODE HERE
+
+
+
+## (DON'T FORGET THAT YOUR OBSERVATIONS SHOULD BE STORED IN A DATA FRAME CALLED 
+## myres WITH THE STRUCTURE DESCRIBED ABOVE).
+```
+
+*****
+
+### 1.1.c
+:::{#prompt .message style="color: blue;"}
+Estimate the mean loss and associated parametric confidence interval (at the significance level provided in your experimental parameters) for all methods. Store your results in a single dataframe called `myCIs01`, with the following columns: 
+
+- `Method` (containing the method name)
+- `Mean` (containing the sample estimate of the mean)
+- `CI.lower` (containing the estimated lower bound of the confidence interval)
+- `CI.upper` (containing the estimated upper bound of the confidence interval)
+:::
+
+```{r Q1_1_c_ci}
+# ADD YOUR CODE HERE
+
+
+## (DON'T FORGET THAT YOUR OUTPUT OBJECT SHOULD BE STORED IN A VARIABLE CALLED 
+## myCIs01).
+```
+
+:::{#prompt .message style="color: blue;"}
+Generate a plot of the confidence intervals using ggplot2. You plot should have the methods on the y-axis and the values on the x-axis - something similar (not identical) to the figure in [this link](https://uob-my.sharepoint.com/:i:/g/personal/me24832_bristol_ac_uk/EYWqpYTKLd5IvNfo_Vy3H4MB1bFnZ2UxGOVfC9QPfLd2JA?e=b4HizP) (without the vertical dashed line):
+:::
+
+```{r Q1_1_c_plot, fig.align='center'}
+# ADD YOUR CODE HERE
+
+```
+
+*****
+
+### 1.1.d Statistical testing
+:::{#prompt .message style="color: blue;"}
+Use the code block below to perform the adequate statistical test, according to the instructions of the coursework descriptor. Store the statistical test object in a variable called `mytest01`. Echo the results of your test (using the `summary()` function, if applicable) to print the results.
+:::
+
+```{r Q1_1_d_code}
+# ADD YOUR CODE HERE
+
+
+
+## (DON'T FORGET THAT THE OBJECT RETURNED BY THE STATISTICAL TEST FUNCTION 
+## SHOULD BE STORED IN A VARIABLE CALLED mytest01).
+```
+
+:::{#prompt .message style="color: blue;"}
+Add a comment in the text block below (up to 100 words) indicating if your results were statistically significant, based on the observed p-value and your predefined significance level.
+:::
+
+:::{#Q1_1_d_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
+Some text here...
+
+:::
+
+*****
+
+### 1.1.e Checking assumptions
+
+:::{#prompt .message style="color: blue;"}
+Provide a brief (less than 150 words) description and explanation of the statistical assumptions of the test used, as a bullet list:
+:::
+
+:::{#Q1_1_e_txt .message style="color: black; border: 1px outset black; background-color: #eeeeff;"}
+
+- ...
+- ...
+- ...
+- ...
+- ...
+
+:::
+
+:::{#prompt .message style="color: blue;"}
+Generate residual plots which could be used to verify the remaining assumptions of your test (you can either use the default plotting methods of the statistical test, or generate the appropriate residual plots using, e.g., base R plots or ggplot2).
+:::
+
+
+```{r Q1_1_e_code, fig.align='center'}
+# ADD YOUR CODE HERE
+
+
+```
+
+*****
+
+### 1.1.f
+:::{#prompt .message style="color: blue;"}
+Perform a post-hoc Tukey test, using the multcomp package. Store the object returned by the function that executes the Tukey test in variable `myMHT1`. Use the `summary()` function to inspect the results of these comparisons.
+:::
+
+```{r Q1_1_f_mcp}
+# ADD YOUR CODE HERE
+
+
+## (DON'T FORGET THAT YOUR OUTPUT OBJECT SHOULD BE STORED IN A VARIABLE CALLED 
+## myMHT1).
+```
+
+:::{#prompt .message style="color: blue;"}
+Extract the simultaneous confidence intervals of your Tukey test comparisons using function `confint()`, using the confidence level indicated by your specific experimental parameters. Store the object returned by `confint()` into a variable called myCIs02. Echo this object and inspect the table of confidence intervals.
+:::
+
+
+```{r Q1_1_f_ci}
+# ADD YOUR CODE HERE
+
+
+## (DON'T FORGET THAT YOUR OUTPUT OBJECT SHOULD BE STORED IN A VARIABLE CALLED 
+## myCIs02).
+```
+
+*****
+
+### 1.1.g
+:::{#prompt .message style="color: blue;"}
+Based on your point estimates obtained in item 1.1.c, what is the method that presents the best (i.e., the smallest) mean loss? Set the variable `best_method` below with the name of that method:
+:::
+
+```{r Q1_1_g_best}
+# ADD YOUR CODE HERE
+
+
+## (DON'T FORGET THAT THE *NAME* OF THE BEST METHOD BASED ON THE POINT ESTIMATE OF THE MEAN SHOULD BE STORED IN A VARIABLE CALLED best_method).
+```
+
+:::{#prompt .message style="color: blue;"}
+Based on the CIs you calculated after the Tukey tests, what is the confidence interval on the difference of the means between the best method above and the second-best one? Store your confidence interval in a single-row dataframe called `topComparison`, with the following columns: 
+
+- `Method1` (containing the name of the best method that you identified above)
+- `Method2` (containing the name of the second-best method)
+- `DiffMeans` (containing the estimated difference of means)
+- `CI.lower` (containing the estimated lower bound of the confidence interval)
+- `CI.upper` (containing the estimated upper bound of the confidence interval)
+:::
+
+```{r Q1_1_g_topcomparison}
+# ADD YOUR CODE HERE
+
+
+## (DON'T FORGET TO STORE YOUR RESULTS AS A SINGLE-ROW DATAFRAME CALLED topComparison ).
+```
+
+:::{#prompt .message style="color: blue;"}
+Using the pooled estimate of the residual variance provided by the omnibus method (item 1.1.d) and the estimated difference of means of the top two methods, calculate the observed standardised effect size (Cohen's d coefficient) between the best and second-best methods. Store this value as a variable called `CohenD`
+:::
+
+```{r Q1_1_g_cohenD}
+# ADD YOUR CODE HERE
+
+
+## (DON'T FORGET TO STORE YOUR RESULTS AS A NUMERIC VARIABLE CALLED CohenD ).
+```
+
+:::{#prompt .message style="color: blue;"}
+Provide a brief comment (up to 150 words) on whether the best method (in terms of point estimate of mean loss) was significantly better than the second-best one at your predefined significance level, and comparing the observed value of the Cohen's D coefficient with the miminally relevant effect size indicated in your experimental parameters, $d*$ 
+:::
+
+:::{#Q1_1_g_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
+Some text here...
+
+:::
+
+*****
+*****
+
+## Question 1.2
+
+### 1.2.a
+:::{#prompt .message style="color: blue;"}
+Enter the statistical hypotheses of your initial (omnibus) test in for this task the text block below. Provide a brief (less than 150 words) description of what is being tested.
+:::
+
+:::{#Q1_1_a .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
+Some text here...
+
+$H_0:$
+
+$H_1:$
+:::
+
+*****
+
+### 1.2.b
+:::{#prompt .message style="color: blue;"}
+Based on the instructions provided in the coursework specs, calculate the required number of test problems necessary for your experiment to have the desired statistical properties. As a reminder, your experimental parameters are given by:
+
+```{r gen_exp_params1_replay, echo=FALSE}
+## DO NOT CHANGE ANYTHING IN THIS CODE BLOCK
+exp_pars <- get_exp_params_1(MY_STUDENT_ID)
+```
+
+Use the code block below to calculate your required number of problems, based on the experimental parameters above and the explicit instructions provided in the CW specs. Store your number of problems as a variable called `nprobs`.
+:::
+
+```{r Q1.2.b}
+# ADD YOUR CODE HERE
+
+
+## (DON'T FORGET TO STORE YOUR RESULT AS A VARIABLE CALLED nprobs).
+```
+
+*****
+
+### 1.2.c
+:::{#prompt .message style="color: blue;"}
+The names of the problems you should use for this item are automatically generated and stored in a variable called `problem.names`. The dimensions of each test problem are stored in a variable called `problem.dimensions`.
+
+```{r gen_problems, echo = FALSE}
+## DO NOT CHANGE ANYTHING IN THIS CODE BLOCK
+if(exists("nprobs")){
+  problems <- gen_problems(MY_STUDENT_ID, nprobs = nprobs, echo = FALSE)
+  problem.names <- sapply(problems, \(x) x$ProblemName)
+  problem.dimensions <- sapply(problems, \(x) length(x$xmax))
+  problem.types      <- sapply(problems, \(x) x$name)
+} else {
+  warning("ATTENTION. VARIABLE nprobs NOT DEFINED PLEASE COMPLETE ITEM 1.2.b.")
+  problems <- gen_problems(1, nprobs = 2, echo = FALSE)
+  problem.names <- sapply(problems, \(x) x$ProblemName)
+  problem.dimensions <- sapply(problems, \(x) length(x$xmax))
+  problem.types      <- sapply(problems, \(x) x$name)
+}
+```
+
+Here's an example of how to generate a single observation for your first method on the first test problem `problem.names[1]`:
+
+```{r}
+## DO NOT CHANGE ANYTHING IN THIS CODE BLOCK
+x <- ExpDE2(method.name = method.names[1], problem.name = problem.names[1])
+my_obs <- log(x)
+my_obs
+```
+
+Adapt the code above to generate your experimental observations. The number of problems is defined by your `nprobs` and the number of repeated runs of each method on each problem is defined in your experimental parameters (nruns). Store your observations in a tidy data frame named `myres2`, containing one observation per row and the following columns: 
+
+- `Method` (containing the method name)
+- `Problem` (containing the problem name)
+- `Value` (containing the observation)
+- `Problem_type` (containing the problem type)
+- `Problem_dimension` (containing the problem dimension)
+
+Set the first three columns as **factor** variables. For column `Method`, set your reference method (the one defined as the best one in the preliminary tests, question 1.1.g) as the **reference** for that factor. The information on problem types and problem dimensions is available in vectors `problem.type` and `problem.dimension`, respectively.
+
+Your data frame `myres2` should have (nprobs x nruns x number of methods) rows
+:::
+
+
+```{r Q1_2_c}
+set.seed(MY_STUDENT_ID) ## <--- DO NOT CHANGE THIS LINE
+
+# ADD YOUR CODE HERE
+
+
+
+## (DON'T FORGET THAT YOUR OBSERVATIONS SHOULD BE STORED IN A DATA FRAME CALLED 
+## myres2 WITH THE STRUCTURE DESCRIBED ABOVE).
+```
+
+*****
+
+### 1.2.d Statistical testing
+:::{#prompt .message style="color: blue;"}
+Use the code block below to perform the adequate statistical test, according to the instructions of the coursework descriptor. Store the statistical test object in a variable called `mytest02`, and use the `summary()` function to print the results.
+:::
+
+```{r Q1_2_d_code}
+# ADD YOUR CODE HERE
+
+
+
+## (DON'T FORGET THAT THE OBJECT RETURNED BY THE STATISTICAL TEST FUNCTION 
+## SHOULD BE STORED IN A VARIABLE CALLED mytest02).
+```
+
+:::{#prompt .message style="color: blue;"}
+Add a comment in the text block below (up to 100 words) indicating if your results were statistically significant, based on the observed p-value and your predefined significance level.
+:::
+
+:::{#Q1_2_d_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
+Some text here...
+
+:::
+
+*****
+
+### 1.2.e
+:::{#prompt .message style="color: blue;"}
+Perform a post-hoc Dunnett test, using the multcomp package. Store the object returned by the function that executes the Tukey test in variable `myMHT2`. Use the `summary()` function to inspect the results of these comparisons.
+:::
+
+```{r Q1_2_e_mcp}
+# ADD YOUR CODE HERE
+
+
+## (DON'T FORGET THAT YOUR OUTPUT OBJECT SHOULD BE STORED IN A VARIABLE CALLED 
+## myMHT2).
+```
+
+:::{#prompt .message style="color: blue;"}
+Extract the simultaneous confidence intervals of your Dunnett test comparisons using function `confint()`, using the confidence level indicated by your specific experimental parameters. Store the object returned by `confint()` into a variable called myCIs03. Echo this object and inspect the table of confidence intervals.
+:::
+
+
+```{r Q1_2_e_ci}
+# ADD YOUR CODE HERE
+
+
+## (DON'T FORGET THAT YOUR OUTPUT OBJECT SHOULD BE STORED IN A VARIABLE CALLED 
+## myCIs03).
+```
+
+*****
+
+### 1.2.f
+:::{#prompt .message style="color: blue;"}
+Based on your results, which of the methods would recommend as the selected strategy for your company's needs? Is it the same one as the preliminary test indicated? Is there a second-best that is close enough to be worth mentioning? Use the text block below and add your comments on the results of this experiment (up to 300 words)
+:::
+
+:::{#Q1_2_f_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
+Some text here...
+
+
+:::
+
+:::{#prompt .message style="color: blue;"}
+Enter the name of your final method recommendation ("best method") as variable `best_final` below
+:::
+
+```{r 1_2_f_final}
+# ADD YOUR CODE HERE
+
+
+## (DON'T FORGET THAT THE NAME OF THE BEST METHOD SHOULD BE STORED AS VARIABLE
+## best_final).
+```
+
+*****
+*****
+
+### =========== End of Task I ===========
