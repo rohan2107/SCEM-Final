@@ -1,7 +1,7 @@
 ---
 title: "SCEM Final Coursework"
 subtitle: "Task I"
-author: "YOUR_NAME (YOUR_STUDENT_NUMBER)"
+author: "Rohan Anthony (2704500)"
 output: pdf_document
 editor_options: 
   markdown: 
@@ -19,7 +19,7 @@ editor_options:
 
 ```{r ID, echo=FALSE, message=FALSE, warning=FALSE}
 ## We will use your student ID as the seed for the random number generator.
-MY_STUDENT_ID <- "ABCDEF" # <-- Replace "ABCDEFG" by your student ID number (as an integer, i.e., without quotes).
+MY_STUDENT_ID <- 2704500 # <-- Replace "ABCDEFG" by your student ID number (as an integer, i.e., without quotes).
 ```
 
 ```{r Setup, echo=FALSE, message=FALSE, warning=FALSE}
@@ -100,11 +100,11 @@ Enter the statistical hypotheses of your initial (omnibus) test for this task in
 :::
 
 :::{#Q1_1_a .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
-Some text here...
+We are trying to determine whether there is any statistically significant difference in performance between five DE configurations (DE.2704500.A-E). Each configuration is executed 50 times on the same optimization problem, producing a sample of loss values. A one-way ANOVA at alpha = 0.04 will be used to test for differences in mean loss among configurations.
 
-$H_0:$
+$H_0: \mu_A = \mu_B = \mu_C = \mu_D = \mu_E$
 
-$H_1:$
+$H_1: \exists i \neq j \text { such that} \mu_i \neq \mu_j$
 :::
 
 *****
@@ -140,7 +140,21 @@ Your data frame `myres` should have (nruns x number of methods) rows.
 set.seed(MY_STUDENT_ID) ## <--- DO NOT CHANGE THIS LINE
 
 # ADD YOUR CODE HERE
+myres <- data.frame(Method = character(exp_pars$nruns * 5),
+                    Value = numeric(exp_pars$nruns * 5))
 
+idx <- 1
+for (m in method.names) {
+  for (i in seq_len(exp_pars$nruns)) {
+    x <- ExpDE2(method.name = m, problem.name = my.problem)
+    myres[idx, "Method"] <- m
+    myres[idx, "Value"] <- as.numeric(log(x))
+    idx <- idx + 1
+  }
+}
+
+dim(myres)
+head(myres)
 
 
 ## (DON'T FORGET THAT YOUR OBSERVATIONS SHOULD BE STORED IN A DATA FRAME CALLED 
