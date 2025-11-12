@@ -397,9 +397,9 @@ Adapt the code above to generate your experimental observations. The number of p
 
 - `Method` (containing the method name)
 - `Problem` (containing the problem name)
-- `Value` (containing the observation)
 - `Problem_type` (containing the problem type)
 - `Problem_dimension` (containing the problem dimension)
+- `Value` (containing the observation)
 
 Set the first three columns as **factor** variables. For column `Method`, set your reference method (the one defined as the best one in the preliminary tests, question 1.1.g) as the **reference** for that factor. The information on problem types and problem dimensions is available in vectors `problem.type` and `problem.dimension`, respectively.
 

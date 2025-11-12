@@ -1,7 +1,7 @@
 ---
 title: "SCEM Final Coursework"
 subtitle: "Task II"
-author: "YOUR_NAME (YOUR_STUDENT_NUMBER)"
+author: "Rohan Anthony (2704500)"
 output: pdf_document
 editor_options: 
   markdown: 
@@ -20,7 +20,7 @@ automatically install those packages (if needed) and load them. Any other calls 
 
 ```{r ID, echo=FALSE, message=FALSE, warning=FALSE}
 ## We will use your student ID as the seed for the random number generator.
-MY_STUDENT_ID <- "ABCDEF" # <-- Replace "ABCDEFG" by your student ID number (as an integer, i.e., without quotes).
+MY_STUDENT_ID <- 2704500 # <-- Replace "ABCDEFG" by your student ID number (as an integer, i.e., without quotes).
 ```
 
 ```{r Setup, echo=FALSE, message=FALSE, warning=FALSE}
@@ -92,6 +92,47 @@ At the end of your EDA section, you should also include a short commentary on wh
 
 You can use as many code blocks as needed, but don't overdo it (remember - everything needs to have a proper rationale). 
 :::
+```{r eda_step1}
+# EDA Step 1: Overview of data set, structure and size
+cat("Observations (Rows):", nrow(df), "\n")
+cat("Variables (Columns):", ncol(df), "\n")
+
+glimpse(df)
+
+# Categorizing columns based on prefixes in Task 2 Context
+prefix_counts <- tibble(name = names(df)) %>%
+  mutate(prefix = case_when(
+    str_starts(name, "Info_") ~ "Info_",
+    str_starts(name, "feat_") ~ "feat_",
+    name == "Class" ~ "Class",
+    TRUE ~ "other"
+  )) %>%
+  count(prefix, sort = TRUE)
+prefix_counts
+```
+
+The dataset consists of 7403 observations and 390 variables. Of these, 385 are numerical feature columns (prefix 'feat_'), 4 information columns (prefix 'Info_') and one target variable 'Class'.
+
+```{r eda_step2}
+# EDA Step 2: Checking class distribution and labels
+class_tab <- df %>%
+  count(Class) %>%
+  arrange(desc(n)) %>%
+  mutate(prop = n / sum(n))
+print(class_tab)
+
+cat("Unique class values: \n")
+print(sort(unique(df$Class)))
+
+# Converting Class to a factor
+df <- df %>%
+  mutate(Class = factor(Class))
+
+```
+
+The target variable Class is moderately balanced with approximately 59% of observations in class '-1' and 41% in class '1'. It has been converted to a factor to ensure proper model handling.
+
+
 
 *****
 

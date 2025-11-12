@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.2)  12 NOV 2025 17:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.2)  12 NOV 2025 18:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./Task01.tex
-(Task01.tex
+**./Task02.tex
+(Task02.tex
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-08-13>
 (C:\Users\rohta\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -390,64 +390,7 @@ File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 tex.def
 File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count316
-) (Task01.aux
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `Q1_1_a' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
-
-LaTeX Warning: Label `prompt' multiply defined.
-
+) (Task02.aux
 
 LaTeX Warning: Label `prompt' multiply defined.
 
@@ -464,7 +407,7 @@ LaTeX Warning: Label `prompt' multiply defined.
 LaTeX Warning: Label `prompt' multiply defined.
 
 )
-\openout1 = `Task01.aux'.
+\openout1 = `Task02.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 118.
 LaTeX Font Info:    ... okay on input line 118.
@@ -612,7 +555,7 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-31.
+35.
 (C:\Users\rohta\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -622,45 +565,100 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 {C:/Users/rohta/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/roht
 a/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/rohta/Ap
 pData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 217.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 217.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 217.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 234.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 207.
 
 LaTeX Font Warning: Font shape `T1/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 234.
-
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-288.
-(C:\Users\rohta\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmtt.fd
-File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-
-LaTeX Font Warning: Font shape `TS1/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `TS1/lmtt/b/sl' tried instead on input line 288.
+(Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 208.
 
 
 
+[2]
+Underfull \vbox (badness 10000) detected at line 623
+ []
 
-[2{C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.en
-c}{C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C
-:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}]
+
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
 
 [3]
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
 
 [4]
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
 
 [5]
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
 
 [6]
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
 
 [7]
+Underfull \vbox (badness 10000) detected at line 623
+ []
 
-[8] (Task01.aux)
+
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
+
+[8]
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 623
+ []
+
+
+
+[9]
+
+[10]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 755.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 755.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 755.
+
+
+[11{C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.e
+nc}{C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}]
+
+
+[12] (Task02.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-08-13>
@@ -670,29 +668,28 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 14107 strings out of 468133
- 222099 string characters out of 5430713
- 678009 words of memory out of 5000000
- 42345 multiletter control sequences out of 15000+600000
- 685245 words of font info for 140 fonts, out of 8000000 for 9000
+ 13991 strings out of 468133
+ 220630 string characters out of 5430713
+ 747171 words of memory out of 5000000
+ 42276 multiletter control sequences out of 15000+600000
+ 676912 words of font info for 131 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 83i,6n,93p,1005b,662s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 83i,6n,93p,1005b,502s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
 b><C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pf
 b><C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pf
-b><C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi7.pfb
-><C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb>
-<C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><
-C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C
-:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/
-Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/
-Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><C:/
-Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtko10.pfb><C:
-/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:
-/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Task01.pdf (8 pages, 330161 bytes).
+b><C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb
+><C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb>
+<C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><
+C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:
+/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:
+/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><C:
+/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtko10.pfb><C
+:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C
+:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb>
+Output written on Task02.pdf (12 pages, 337100 bytes).
 PDF statistics:
- 233 PDF objects out of 1000 (max. 8388607)
- 57 named destinations out of 1000 (max. 500000)
- 32905 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 164 PDF objects out of 1000 (max. 8388607)
+ 26 named destinations out of 1000 (max. 500000)
+ 26681 words of extra memory for PDF output out of 29859 (max. 10000000)
 
