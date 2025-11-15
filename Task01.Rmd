@@ -337,7 +337,12 @@ Based on your point estimates obtained in item 1.1.c, what is the method that pr
 
 ```{r Q1_1_g_best}
 # ADD YOUR CODE HERE
-
+best_method <- myCIs01 %>%
+  arrange(Mean) %>%
+  slice(1) %>%
+  pull(Method)
+best_method <- as.character(best_method)
+best_method
 
 ## (DON'T FORGET THAT THE *NAME* OF THE BEST METHOD BASED ON THE POINT ESTIMATE OF THE MEAN SHOULD BE STORED IN A VARIABLE CALLED best_method).
 ```
@@ -354,7 +359,29 @@ Based on the CIs you calculated after the Tukey tests, what is the confidence in
 
 ```{r Q1_1_g_topcomparison}
 # ADD YOUR CODE HERE
+second_best_method <- myCIs01 %>%
+  arrange(Mean) %>%
+  slice(2) %>%
+  pull(Method)
+second_best_method <- as.character(second_best_method)
+second_best_method
 
+# Extracting D - A from myCIs02
+ci_row <- myCIs02$confint[paste0(second_best_method, " - ", best_method),]
+
+# Negating estimate and CI bounds to get A - D comparison
+diff_A_D <- -ci_row["Estimate"]
+ci_bounds <- sort(c(-ci_row["lwr"], -ci_row["upr"]))
+
+topComparison <- data.frame(
+  Method1 = best_method,
+  Method2 = second_best_method,
+  DiffMeans = diff_A_D,
+  CI.lower = ci_bounds[1],
+  CI.upper = ci_bounds[2]
+)
+rownames(topComparison) <- NULL
+topComparison
 
 ## (DON'T FORGET TO STORE YOUR RESULTS AS A SINGLE-ROW DATAFRAME CALLED topComparison ).
 ```
@@ -365,7 +392,11 @@ Using the pooled estimate of the residual variance provided by the omnibus metho
 
 ```{r Q1_1_g_cohenD}
 # ADD YOUR CODE HERE
+pooled_var <- summary(mytest01)[[1]]["Residuals", "Mean Sq"]
+pooled_sd <- sqrt(pooled_var)
 
+CohenD <- as.numeric(abs(diff_A_D / pooled_sd))
+CohenD
 
 ## (DON'T FORGET TO STORE YOUR RESULTS AS A NUMERIC VARIABLE CALLED CohenD ).
 ```
@@ -375,7 +406,7 @@ Provide a brief comment (up to 150 words) on whether the best method (in terms o
 :::
 
 :::{#Q1_1_g_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
-Some text here...
+The method with the smallest estimated mean log-loss, DE.2704500.A, is recommended as the reference method for further experiments. Method A was found to be significantly better than the second-best method, DE.2704500.D at the alpha = 0.04 significance level. This is confirmed because the Tukey-adjusted confidence interval for the difference between A and D does not include zero. The magnitude of the observed effect size (Cohen's d) is approximately 3.47, which is significantly greater than the minimally relevant effect size of 0.75. Therefore, the performance difference between DE.2704500.A and DE.2704500.D is considered statistically significant.
 
 :::
 
