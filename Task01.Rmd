@@ -153,6 +153,8 @@ for (m in method.names) {
   }
 }
 
+myres$Method <- factor(myres$Method)
+
 dim(myres)
 head(myres)
 
@@ -175,7 +177,22 @@ Estimate the mean loss and associated parametric confidence interval (at the sig
 
 ```{r Q1_1_c_ci}
 # ADD YOUR CODE HERE
+alpha <- exp_pars$alpha
+methods_unique <- unique(myres$Method)
 
+myCIs01 <- myres %>%
+  group_by(Method) %>%
+  summarise(
+    Mean = mean(Value),
+    n = n(),
+    sd = sd(Value),
+    se = sd(Value) / sqrt(n),
+    t_crit = qt(1 - alpha / 2, df = n - 1),
+    CI.lower = Mean - t_crit * se,
+    CI.upper = Mean + t_crit * se
+  ) %>%
+  select(Method, Mean, CI.lower, CI.upper)
+myCIs01
 
 ## (DON'T FORGET THAT YOUR OUTPUT OBJECT SHOULD BE STORED IN A VARIABLE CALLED 
 ## myCIs01).
@@ -187,6 +204,15 @@ Generate a plot of the confidence intervals using ggplot2. You plot should have 
 
 ```{r Q1_1_c_plot, fig.align='center'}
 # ADD YOUR CODE HERE
+ggplot(myCIs01, aes(x = Mean, y = Method)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = CI.lower, xmax = CI.upper)) +
+  labs(
+    title = paste0("Mean(log loss) and ", round((1 - exp_pars$alpha) * 100), "% CIs by method"),
+    x = "Mean (log loss)",
+    y = "Method"
+  ) +
+theme_minimal()
 
 ```
 
@@ -199,7 +225,8 @@ Use the code block below to perform the adequate statistical test, according to 
 
 ```{r Q1_1_d_code}
 # ADD YOUR CODE HERE
-
+mytest01 <- aov(Value ~ Method, data = myres)
+summary(mytest01)
 
 
 ## (DON'T FORGET THAT THE OBJECT RETURNED BY THE STATISTICAL TEST FUNCTION 
@@ -211,7 +238,7 @@ Add a comment in the text block below (up to 100 words) indicating if your resul
 :::
 
 :::{#Q1_1_d_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
-Some text here...
+The ANOVA test indicates a statistically significant difference in mean log-loss across the five DE configurations. The p-value obtained is < 2e-16, which is far below the predefined significance level alpha = 0.04. Therefore, we reject the null hypothesis that all methods have equal mean loss. We can conclude that at least one method's mean performance is significantly different from the others.
 
 :::
 
@@ -225,11 +252,11 @@ Provide a brief (less than 150 words) description and explanation of the statist
 
 :::{#Q1_1_e_txt .message style="color: black; border: 1px outset black; background-color: #eeeeff;"}
 
-- ...
-- ...
-- ...
-- ...
-- ...
+- Independence of Observations: The 50 samples for each method must be independent of one another.
+- Normality of Residuals: The residuals from the ANOVA must be approximately normally distributed.
+- Homogeneity of Variances: All methods should have similar variance in their log-loss values.
+- Scale of Measurement: Dependent variable is measured on a continuous scale.
+- Model Additivity - The effects of the Method configurations on the mean loss must combine additively.
 
 :::
 
@@ -240,7 +267,29 @@ Generate residual plots which could be used to verify the remaining assumptions 
 
 ```{r Q1_1_e_code, fig.align='center'}
 # ADD YOUR CODE HERE
+par(mfrow = c(2, 2))
+plot(mytest01, pch = 16, cex = 0.5, las = 1)
+par(mfrow = c(1,1))
 
+res <- residuals(mytest01)
+
+ggplot(data.frame(x = res), aes(sample = x)) +
+  geom_qq() +
+  geom_qq_line(col = "red") +
+  theme_minimal() +
+  xlab("Normal quantiles") + 
+  ylab("Residuals") +
+  ggtitle("Q-Q plot of ANOVA residuals")
+
+res_df <- myres %>% mutate(Residual = res)
+
+ggplot(res_df, aes(x = Method, y = Residual)) +
+  geom_violin(aes(fill = Method), alpha = 0.25) +
+  geom_jitter(width = .05, alpha = .1) +
+  theme_minimal() +
+  xlab("Method") +
+  ylab("Residuals") +
+  ggtitle("Residuals by Method (violin + jitter)")
 
 ```
 
@@ -253,7 +302,10 @@ Perform a post-hoc Tukey test, using the multcomp package. Store the object retu
 
 ```{r Q1_1_f_mcp}
 # ADD YOUR CODE HERE
+library(multcomp)
 
+myMHT1 <- glht(mytest01, linfct = mcp(Method = "Tukey"))
+summary(myMHT1)
 
 ## (DON'T FORGET THAT YOUR OUTPUT OBJECT SHOULD BE STORED IN A VARIABLE CALLED 
 ## myMHT1).
@@ -267,10 +319,14 @@ Extract the simultaneous confidence intervals of your Tukey test comparisons usi
 ```{r Q1_1_f_ci}
 # ADD YOUR CODE HERE
 
+ci_level <- 1 - exp_pars$alpha
+myCIs02 <- confint(myMHT1, level = ci_level)
+print(myCIs02)
 
 ## (DON'T FORGET THAT YOUR OUTPUT OBJECT SHOULD BE STORED IN A VARIABLE CALLED 
 ## myCIs02).
 ```
+Tukey post-hoc test shows that almost all method pairs differ significantly at alpha = 0.04. All comparisons have adjusted p-values < 0.04 except E - C, whose confidence interval includes zero. This tells us that all methods differ significantly from each other except DE.2704500.E vs DE.2704500.C
 
 *****
 
