@@ -424,11 +424,11 @@ Enter the statistical hypotheses of your initial (omnibus) test in for this task
 :::
 
 :::{#Q1_1_a .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
-Some text here...
+We now test whether the candidate DE configurations have any statistically significant difference in the expected mean loss across the class of test problems of interest. We will perform a two-sided omnibus test at alpha = 0.04, running each method on the same problems. If the omnibus test is significant we will run all-vs-one Dunnett comparisons of the means of the methods.
 
-$H_0:$
+$H_0: \mu_A = \mu_B = \mu_C = \mu_D = \mu_E$
 
-$H_1:$
+$H_1: \exists i \neq j \text { such that} \mu_i \neq \mu_j$
 :::
 
 *****
@@ -447,6 +447,18 @@ Use the code block below to calculate your required number of problems, based on
 
 ```{r Q1.2.b}
 # ADD YOUR CODE HERE
+alpha <- exp_pars$alpha
+mres <- exp_pars$mres
+power <- exp_pars$desired.power
+K <- length(method.names)
+n_comparisons <- K - 1
+
+alpha_bon <- alpha / n_comparisons
+z_alpha <- qnorm(1 - alpha_bon / 2)
+z_beta <- qnorm(power)
+
+nprobs <- ceiling((z_alpha + z_beta) ^ 2 / (mres ^ 2))
+nprobs
 
 
 ## (DON'T FORGET TO STORE YOUR RESULT AS A VARIABLE CALLED nprobs).
