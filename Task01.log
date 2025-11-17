@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.2)  17 NOV 2025 15:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.2)  17 NOV 2025 18:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -705,7 +705,9 @@ nput line 497.
 
 [14]
 
-[15] (Task01.aux)
+[15]
+
+[16] (Task01.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-08-13>
@@ -715,11 +717,11 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 14157 strings out of 468133
- 224076 string characters out of 5430713
+ 14161 strings out of 468133
+ 224108 string characters out of 5430713
  678025 words of memory out of 5000000
- 42382 multiletter control sequences out of 15000+600000
- 685494 words of font info for 143 fonts, out of 8000000 for 9000
+ 42381 multiletter control sequences out of 15000+600000
+ 685660 words of font info for 145 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  83i,6n,93p,1005b,673s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
@@ -735,9 +737,9 @@ Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><C:/
 Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtko10.pfb><C:
 /Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:
 /Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Task01.pdf (15 pages, 479982 bytes).
+Output written on Task01.pdf (16 pages, 482554 bytes).
 PDF statistics:
- 292 PDF objects out of 1000 (max. 8388607)
- 64 named destinations out of 1000 (max. 500000)
+ 296 PDF objects out of 1000 (max. 8388607)
+ 65 named destinations out of 1000 (max. 500000)
  32925 words of extra memory for PDF output out of 35830 (max. 10000000)
 

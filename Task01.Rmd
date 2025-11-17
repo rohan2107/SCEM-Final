@@ -572,7 +572,7 @@ Add a comment in the text block below (up to 100 words) indicating if your resul
 :::
 
 :::{#Q1_2_d_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
-The One-Way ANOVA test indicates a statistically significant difference in the expected mean log-loss across the five candidate methods. The p-value obtained is extremely small and much less than the predefined significance level of alpha = 0.04. Therefore, we reject the null hypothesis and conclude that at least one method's expected mean performance differs significantly from the others when generalising over the class of test problems.
+The One-Way ANOVA test indicates a statistically significant difference in the expected mean log-loss across the five candidate methods. The p-value obtained is extremely small and much less than the predefined significance level of alpha = 0.04. Therefore, we reject the null hypothesis and conclude that at least one method's expected mean performance differs significantly from the others when generalizing over the class of test problems.
 
 :::
 
@@ -585,7 +585,10 @@ Perform a post-hoc Dunnett test, using the multcomp package. Store the object re
 
 ```{r Q1_2_e_mcp}
 # ADD YOUR CODE HERE
+library(multcomp)
 
+myMHT2 <- glht(mytest02, linfct = mcp(Method = "Dunnett"))
+summary(myMHT2)
 
 ## (DON'T FORGET THAT YOUR OUTPUT OBJECT SHOULD BE STORED IN A VARIABLE CALLED 
 ## myMHT2).
@@ -598,7 +601,9 @@ Extract the simultaneous confidence intervals of your Dunnett test comparisons u
 
 ```{r Q1_2_e_ci}
 # ADD YOUR CODE HERE
-
+ci_level <- 1 - exp_pars$alpha
+myCIs03 <- confint(myMHT2, level = ci_level)
+print(myCIs03)
 
 ## (DON'T FORGET THAT YOUR OUTPUT OBJECT SHOULD BE STORED IN A VARIABLE CALLED 
 ## myCIs03).
@@ -612,8 +617,13 @@ Based on your results, which of the methods would recommend as the selected stra
 :::
 
 :::{#Q1_2_f_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
-Some text here...
+Based on the results of our generalized experiment across the class of test problems, the recommended strategy is DE.2704500.E. This method has the smallest estimated mean log-loss across all problems and repeated runs and is therefore the best performing method overall.
 
+Compared with the results of the preliminary test, this is not the same method we identified previously (DE.2704500.A). While A was the best method for the single problem type we tested on, this does not hold true when the scope of problems is broadened.
+
+If we had to choose a second best algorithm, our results would point us to DE.2704500.D, which had the next lowest mean loss after E.
+
+Overall, DE.2704500.E is the method that produced the lowest estimated log-loss across all problems and is therefore the recommended strategy.
 
 :::
 
@@ -623,7 +633,8 @@ Enter the name of your final method recommendation ("best method") as variable `
 
 ```{r 1_2_f_final}
 # ADD YOUR CODE HERE
-
+best_final <- "DE.2704500.E"
+best_final
 
 ## (DON'T FORGET THAT THE NAME OF THE BEST METHOD SHOULD BE STORED AS VARIABLE
 ## best_final).
