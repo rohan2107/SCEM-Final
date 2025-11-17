@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.2)  15 NOV 2025 19:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.2)  17 NOV 2025 12:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -635,13 +635,13 @@ LaTeX Font Warning: Font shape `T1/lmtt/bx/it' in size <10> not available
 (Font)              Font shape `T1/lmtt/b/sl' tried instead on input line 234.
 
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-290.
+292.
 (C:\Users\rohta\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 
 LaTeX Font Warning: Font shape `TS1/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `TS1/lmtt/b/sl' tried instead on input line 290.
+(Font)              Font shape `TS1/lmtt/b/sl' tried instead on input line 292.
 
 
 
@@ -649,13 +649,17 @@ LaTeX Font Warning: Font shape `TS1/lmtt/bx/it' in size <10> not available
 [2{C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.en
 c}{C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C
 :/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}]
+Overfull \vbox (0.32155pt too high) detected at line 352
+ []
+
+
 
 [3]
 <Task01_files/figure-latex/Q1_1_c_plot-1.pdf, id=43, 469.755pt x 325.215pt>
 File: Task01_files/figure-latex/Q1_1_c_plot-1.pdf Graphic file (type pdf)
 <use Task01_files/figure-latex/Q1_1_c_plot-1.pdf>
 Package pdftex.def Info: Task01_files/figure-latex/Q1_1_c_plot-1.pdf  used on i
-nput line 379.
+nput line 377.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 
@@ -666,7 +670,7 @@ nput line 379.
 File: Task01_files/figure-latex/Q1_1_e_code-1.pdf Graphic file (type pdf)
 <use Task01_files/figure-latex/Q1_1_e_code-1.pdf>
 Package pdftex.def Info: Task01_files/figure-latex/Q1_1_e_code-1.pdf  used on i
-nput line 464.
+nput line 462.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 
@@ -675,13 +679,13 @@ nput line 464.
 File: Task01_files/figure-latex/Q1_1_e_code-2.pdf Graphic file (type pdf)
 <use Task01_files/figure-latex/Q1_1_e_code-2.pdf>
 Package pdftex.def Info: Task01_files/figure-latex/Q1_1_e_code-2.pdf  used on i
-nput line 482.
+nput line 480.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 <Task01_files/figure-latex/Q1_1_e_code-3.pdf, id=77, 469.755pt x 325.215pt>
 File: Task01_files/figure-latex/Q1_1_e_code-3.pdf Graphic file (type pdf)
 <use Task01_files/figure-latex/Q1_1_e_code-3.pdf>
 Package pdftex.def Info: Task01_files/figure-latex/Q1_1_e_code-3.pdf  used on i
-nput line 499.
+nput line 497.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
 
@@ -709,10 +713,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 14154 strings out of 468133
- 224053 string characters out of 5430713
+ 14153 strings out of 468133
+ 224036 string characters out of 5430713
  678025 words of memory out of 5000000
- 42382 multiletter control sequences out of 15000+600000
+ 42381 multiletter control sequences out of 15000+600000
  685411 words of font info for 142 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  83i,6n,93p,1005b,662s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -729,7 +733,7 @@ Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><C:/
 Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtko10.pfb><C:
 /Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:
 /Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Task01.pdf (14 pages, 476238 bytes).
+Output written on Task01.pdf (14 pages, 476025 bytes).
 PDF statistics:
  288 PDF objects out of 1000 (max. 8388607)
  63 named destinations out of 1000 (max. 500000)

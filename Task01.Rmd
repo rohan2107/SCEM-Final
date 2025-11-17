@@ -140,8 +140,10 @@ Your data frame `myres` should have (nruns x number of methods) rows.
 set.seed(MY_STUDENT_ID) ## <--- DO NOT CHANGE THIS LINE
 
 # ADD YOUR CODE HERE
-myres <- data.frame(Method = character(exp_pars$nruns * 5),
-                    Value = numeric(exp_pars$nruns * 5))
+my.problem <- (paste0("Prob.", MY_STUDENT_ID, ".999"))
+nmethods <- length(method.names)
+myres <- data.frame(Method = character(exp_pars$nruns * nmethods),
+                    Value = numeric(exp_pars$nruns * nmethods))
 
 idx <- 1
 for (m in method.names) {
@@ -206,7 +208,8 @@ Generate a plot of the confidence intervals using ggplot2. You plot should have 
 # ADD YOUR CODE HERE
 ggplot(myCIs01, aes(x = Mean, y = Method)) +
   geom_point(size = 3) +
-  geom_errorbarh(aes(xmin = CI.lower, xmax = CI.upper)) +
+  geom_errorbar(aes(xmin = CI.lower, xmax = CI.upper, y = Method), 
+                orientation = "y", width = 0.2) +
   labs(
     title = paste0("Mean(log loss) and ", round((1 - exp_pars$alpha) * 100), "% CIs by method"),
     x = "Mean (log loss)",
@@ -395,7 +398,7 @@ Using the pooled estimate of the residual variance provided by the omnibus metho
 pooled_var <- summary(mytest01)[[1]]["Residuals", "Mean Sq"]
 pooled_sd <- sqrt(pooled_var)
 
-CohenD <- as.numeric(abs(diff_A_D / pooled_sd))
+CohenD <- as.numeric(diff_A_D / pooled_sd)
 CohenD
 
 ## (DON'T FORGET TO STORE YOUR RESULTS AS A NUMERIC VARIABLE CALLED CohenD ).
