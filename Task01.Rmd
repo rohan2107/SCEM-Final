@@ -513,7 +513,37 @@ Your data frame `myres2` should have (nprobs x nruns x number of methods) rows
 set.seed(MY_STUDENT_ID) ## <--- DO NOT CHANGE THIS LINE
 
 # ADD YOUR CODE HERE
+results_list <- list()
+idx <- 1
 
+for (p in seq_along(problem.names)) {
+  for (m in method.names) {
+    for (r in seq_len(exp_pars$nruns)) {
+      x <- ExpDE2(method.name = m, problem.name = problem.names[p])
+      
+      results_list[[idx]] <- data.frame(
+        Method = m,
+        Problem = problem.names[p],
+        Problem_type = problem.types[p],
+        Problem_dimension = problem.dimensions[p],
+        Value = log(as.numeric(x))
+      )
+      idx <- idx + 1
+    }
+  }
+}
+
+myres2 <- do.call(rbind, results_list)
+
+myres2$Method <- factor(myres2$Method)
+myres2$Problem <- factor(myres2$Problem)
+myres2$Problem_type <- factor(myres2$Problem_type)
+
+myres2$Method <- relevel(myres2$Method, ref = best_method)
+
+str(myres2)
+dim(myres2)
+head(myres2)
 
 
 ## (DON'T FORGET THAT YOUR OBSERVATIONS SHOULD BE STORED IN A DATA FRAME CALLED 
@@ -529,7 +559,8 @@ Use the code block below to perform the adequate statistical test, according to 
 
 ```{r Q1_2_d_code}
 # ADD YOUR CODE HERE
-
+mytest02 <- aov(Value ~ Method, data = myres2)
+summary(mytest02)
 
 
 ## (DON'T FORGET THAT THE OBJECT RETURNED BY THE STATISTICAL TEST FUNCTION 
@@ -541,7 +572,7 @@ Add a comment in the text block below (up to 100 words) indicating if your resul
 :::
 
 :::{#Q1_2_d_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
-Some text here...
+The One-Way ANOVA test indicates a statistically significant difference in the expected mean log-loss across the five candidate methods. The p-value obtained is extremely small and much less than the predefined significance level of alpha = 0.04. Therefore, we reject the null hypothesis and conclude that at least one method's expected mean performance differs significantly from the others when generalising over the class of test problems.
 
 :::
 
