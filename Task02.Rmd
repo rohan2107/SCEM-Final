@@ -157,7 +157,7 @@ missing_summary %>%
 A total of 486 missing values were found across the dataset. Missingness is sparse because this is much smaller than the total number of cells in the dataset and no individual variable contains more than 5 missing values. We have also verified that there are no missing values in the target variable 'Class' and only one 'Info_' column contains a missing value. Given the low and unstructured nature of the missing values, imputation will be sufficient during preprocessing.
 
 ```{r eda_step4}
-# EDA Step 4: Scale and variance of numeric features
+# EDA Step 4: Scale, variance and correlation of numeric features
 
 # Summarizing min and max values for each numerical feature
 df_num <- df %>% select(starts_with("feat_"))
@@ -179,12 +179,14 @@ scale_summary %>%
        x = "Min",
        y = "Max")
 
+# Determining global min and max values across all numerical features
 all_vals   <- unlist(df_num)
 global_min <- min(all_vals, na.rm = TRUE)
 global_max <- max(all_vals, na.rm = TRUE)
 
 cat("Global numeric feature range: [",global_min, ", ",global_max,"]\n")
 
+# Checking for variables with near zero variance
 nzv_check <- df_num %>%
   summarise(across(everything(), ~ length(unique(.)))) %>%
   pivot_longer(cols = everything(),
@@ -194,8 +196,17 @@ nzv_check <- df_num %>%
 
 head(nzv_check)
 
+# Checking for correlation between numerical features
+corr_mat <- cor(df_num, use = "pairwise.complete.obs")
+corr_df <- as.data.frame(as.table(corr_mat)) %>% setNames(c("Var1","Var2","Corr")) %>%
+  filter(Var1 != Var2) %>% mutate(AbsCorr = abs(Corr)) %>% arrange(desc(AbsCorr))
+
+cat("Top correlated pairs (abs corr):\n")
+print(head(corr_df, 10))
+
+
 ```
-We can see that the numerical features vary widely in scale. Most features have min and max values clustered near zero but some take very large positive values and some take negative values. Due to the high dimensionality of the dataset, we have used a min-max scatter plot to detect outliers. Over all values the global range is approximately [-152, 3.3e5]. These extreme values suggest that scaling will be required. From our near zero variance check, we can see that all features exhibit substantial variability, therefore we do not need to filter out any of these features in further steps.  
+We can see that the numerical features vary widely in scale. Most features have min and max values clustered near zero but some take very large positive values and some take negative values. Due to the high dimensionality of the dataset, we have used a min-max scatter plot to detect outliers. Over all values the global range is approximately [-152, 3.3e5]. These extreme values suggest that scaling will be required. From our near zero variance check, we can see that all features exhibit substantial variability, therefore we do not need to filter out any of these features in further steps.  The correlation check shows several pairs of highly correlated features which will be addressed during preprocessing.
 
 Overall, the EDA shows that the dataset is high-dimensional with a moderately balanced target variable. Missing values are sparse, so simple imputation will be sufficient. The numerical features exhibit substantial difference in scale, so scaling will be required before modelling. All features show adequate variability, so we do not need any feature filtering.
 
