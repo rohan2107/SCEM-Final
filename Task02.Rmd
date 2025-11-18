@@ -121,9 +121,6 @@ class_tab <- df %>%
   mutate(prop = n / sum(n))
 print(class_tab)
 
-cat("Unique class values: \n")
-print(sort(unique(df$Class)))
-
 # Converting Class to a factor
 df <- df %>%
   mutate(Class = factor(Class))
@@ -132,7 +129,75 @@ df <- df %>%
 
 The target variable Class is moderately balanced with approximately 59% of observations in class '-1' and 41% in class '1'. It has been converted to a factor to ensure proper model handling.
 
+```{r eda_step3}
+# EDA Step 3: Checking for missing values
 
+# Total number of missing values in the dataset
+total_missing <- sum(is.na(df))
+total_missing
+
+# Count missing values for each variable
+missing_summary <- df %>%
+  summarise(across(everything(), ~ sum(is.na(.)))) %>%
+  pivot_longer(everything(), names_to = "variable", values_to = "missing") %>%
+  filter(missing > 0) %>%
+  arrange(desc(missing))
+
+missing_summary
+
+# Identifying if there are any missing values in Class or any of the Info_ variables
+"Class" %in% missing_summary$variable
+
+any(str_starts(missing_summary$variable, "Info_"))
+
+missing_summary %>%
+  filter(str_starts(variable, "Info_"))
+
+```
+A total of 486 missing values were found across the dataset. Missingness is sparse because this is much smaller than the total number of cells in the dataset and no individual variable contains more than 5 missing values. We have also verified that there are no missing values in the target variable 'Class' and only one 'Info_' column contains a missing value. Given the low and unstructured nature of the missing values, imputation will be sufficient during preprocessing.
+
+```{r eda_step4}
+# EDA Step 4: Scale and variance of numeric features
+
+# Summarizing min and max values for each numerical feature
+df_num <- df %>% select(starts_with("feat_"))
+
+scale_summary <- df_num %>%
+  summarise(across(everything(),
+                   list(min = ~min(.x, na.rm = TRUE),
+                        max = ~max(.x, na.rm = TRUE)))) %>%
+  pivot_longer(everything(),
+               names_to = c("variable", "stat"),
+               names_pattern = "(.*)_(min|max)$") %>%
+  pivot_wider(names_from = stat, values_from = value)
+
+scale_summary %>%
+  ggplot(aes(x = min, y = max)) +
+  geom_point(alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "Feature Scale (Min vs Max)",
+       x = "Min",
+       y = "Max")
+
+all_vals   <- unlist(df_num)
+global_min <- min(all_vals, na.rm = TRUE)
+global_max <- max(all_vals, na.rm = TRUE)
+
+cat("Global numeric feature range: [",global_min, ", ",global_max,"]\n")
+
+nzv_check <- df_num %>%
+  summarise(across(everything(), ~ length(unique(.)))) %>%
+  pivot_longer(cols = everything(),
+               names_to = "feature",
+               values_to = "n_unique") %>%
+  arrange(n_unique)
+
+head(nzv_check)
+
+```
+We can see that the numerical features vary widely in scale. Most features have min and max values clustered near zero but some take very large positive values and some take negative values. Due to the high dimensionality of the dataset, we have used a min-max scatter plot to detect outliers. Over all values the global range is approximately [-152, 3.3e5]. These extreme values suggest that scaling will be required. From our near zero variance check, we can see that all features exhibit substantial variability, therefore we do not need to filter out any of these features in further steps.  
+
+Overall, the EDA shows that the dataset is high-dimensional with a moderately balanced target variable. Missing values are sparse, so simple imputation will be sufficient. The numerical features exhibit substantial difference in scale, so scaling will be required before modelling. All features show adequate variability, so we do not need any feature filtering.
 
 *****
 
