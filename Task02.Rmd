@@ -206,7 +206,7 @@ print(head(corr_df, 10))
 
 
 ```
-We can see that the numerical features vary widely in scale. Most features have min and max values clustered near zero but some take very large positive values and some take negative values. Due to the high dimensionality of the dataset, we have used a min-max scatter plot to detect outliers. Over all values the global range is approximately [-152, 3.3e5]. These extreme values suggest that scaling will be required. From our near zero variance check, we can see that all features exhibit substantial variability, therefore we do not need to filter out any of these features in further steps.  The correlation check shows several pairs of highly correlated features which will be addressed during preprocessing.
+We can see that the numerical features vary widely in scale. Most features have min and max values clustered near zero but some take very large positive values and some take negative values. Due to the high dimensionality of the dataset, we have used a min-max scatter plot to detect outliers. Over all values the global range is approximately [-152, 3.3e5]. These extreme values suggest that scaling will be required. From our near zero variance check, we can see that all features exhibit substantial variability, therefore we do not need to filter out any of these features in further steps.  The correlation check shows several pairs of highly correlated features which will be addressed by PCA during modelling.
 
 Overall, the EDA shows that the dataset is high-dimensional with a moderately balanced target variable. Missing values are sparse, so simple imputation will be sufficient. The numerical features exhibit substantial difference in scale, so scaling will be required before modelling. All features show adequate variability, so we do not need any feature filtering.
 
@@ -232,6 +232,51 @@ You can use as many code blocks as needed, but don't overdo it (remember - every
 **Note**: In this section you'll be basically defining which data transformations you will later incorporate into your predictive pipeline. When you build the pipeline in the next section, you'll encapsulate all those steps (together with the model) into a single object that you can fit and deploy as a single unit.
 :::
 
+We first split the data into train and test splits by group on Info_group to prevent data leakage. 
+```{r dpp_step1}
+# DPP Step 1: Splitting data into train and test sets by group
+set.seed(MY_STUDENT_ID)
+
+# 80:20 split into training and test based on Info_group
+data_split <- group_initial_split(df, group = Info_group, prop = 0.8)
+
+df_train <- training(data_split)
+df_test <- testing(data_split)
+
+length(intersect(df_train$Info_group, df_test$Info_group))
+
+```
+
+In the construction of our recipe we note from EDA:
+1. Info_ columns are non informative as predictors and should be excluded from the predictor set.
+2. Missing values are sparse and unstructured, so trimmed mean imputation is sufficient.
+3. Numerical features have very different scales so we apply normalization
+
+```{r dpp_step2}
+# DPP Step 2: Preprocessing recipe based on EDA
+library(recipes)
+
+pp_recipe <- recipe(Class ~ ., data = df_train) %>%
+  step_rm(starts_with("Info_")) %>%
+  step_impute_mean(all_numeric_predictors(), trim = 0.1) %>%
+  step_normalize(all_numeric_predictors())
+pp_recipe
+
+pp_recipe_prepped <- prep(pp_recipe)
+pp_recipe_prepped
+
+train_processed <- bake(pp_recipe_prepped, df_train)
+train_processed
+
+cat("Info_ columns ",
+    any(startsWith(names(train_processed), "Info_")), "\n")
+cat("Total remaining NAs after preprocessing:",
+    sum(is.na(train_processed)), "\n")
+cat("Number of predictors after preprocessing (excluding Class):",
+    ncol(train_processed) - 1, "\n")
+
+```
+The preprocessing recipe removes all non-informative Info_ columns from the predictor set, imputes missing values using winsorised mean (10% trim) and normalizes all numeric features. The only unaddressed insight from EDA is the presence of highly correlated features, which we will address during modelling using PCA. 
 
 *****
 
