@@ -295,6 +295,7 @@ ggplot(res_df, aes(x = Method, y = Residual)) +
   ggtitle("Residuals by Method (violin + jitter)")
 
 ```
+Q-Q plots show residuals are approximately normally distributed with minor tail deviations. Residuals vs Fitted and Scale-Location plot indicates relatively constant variance across groups. Violin plot shows similar spread across methods.
 
 *****
 
