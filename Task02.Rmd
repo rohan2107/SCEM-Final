@@ -376,7 +376,7 @@ group_folds <- group_vfold_cv(
 
 group_folds
 ```
-To prevent data leakage we have used a 5-fold cross-validation, where folds are constructed using 'Info_group.
+To prevent data leakage we have used a 5-fold cross-validation, where folds are constructed using 'Info_group'.
 
 ```{r modelling_step5}
 # Modelling Step 5: Comparing Random Forest and Elastic Net
