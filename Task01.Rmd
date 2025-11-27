@@ -560,7 +560,7 @@ Use the code block below to perform the adequate statistical test, according to 
 
 ```{r Q1_2_d_code}
 # ADD YOUR CODE HERE
-mytest02 <- aov(Value ~ Method, data = myres2)
+mytest02 <- aov(Value ~ Method + Problem, data = myres2)
 summary(mytest02)
 
 
@@ -573,7 +573,7 @@ Add a comment in the text block below (up to 100 words) indicating if your resul
 :::
 
 :::{#Q1_2_d_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
-The One-Way ANOVA test indicates a statistically significant difference in the expected mean log-loss across the five candidate methods. The p-value obtained is extremely small and much less than the predefined significance level of alpha = 0.04. Therefore, we reject the null hypothesis and conclude that at least one method's expected mean performance differs significantly from the others when generalizing over the class of test problems.
+The ANOVA test with Problem as a blocking factor indicates a statistically significant difference in the expected mean log-loss across the five candidate methods. The p-value obtained is extremely small and much less than the predefined significance level of alpha = 0.04. Therefore, we reject the null hypothesis and conclude that at least one method's expected mean performance differs significantly from the others when generalizing over the class of test problems.
 
 :::
 

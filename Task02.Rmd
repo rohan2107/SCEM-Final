@@ -36,7 +36,8 @@ allowed.packages <- c("tidyverse",
                       "parsnip", 
                       "bonsai", 
                       "healthyR.ai", 
-                      "knitr")
+                      "knitr",
+                      "ranger")
 
 
 ## DO NOT CHANGE ANYTHING ELSE IN THIS CODE BLOCK
@@ -270,7 +271,6 @@ In the construction of our recipe we note from EDA:
 
 ```{r dpp_step2}
 # DPP Step 2: Preprocessing recipe based on EDA
-library(recipes)
 
 pp_recipe <- recipe(Class ~ ., data = df_train) %>%
   step_rm(starts_with("Info_")) %>%
@@ -311,7 +311,126 @@ Please refer to the CW specs for other requirements of this step (including, e.g
 
 You can use as many code blocks as needed, but don't overdo it (remember - everything needs to have a proper rationale). If you compare different models, make sure to make it clear, and to indicate at the end which pipeline option is your final selected one.
 :::
+```{r modelling_step1}
+# Modelling Step 1: Simple logistic regression using DPP recipe
+lr_model <- logistic_reg() %>%
+  set_mode("classification") %>%
+  set_engine("glm")
 
+lr_wf <- workflow() %>%
+  add_recipe(pp_recipe) %>%
+  add_model(lr_model)
+
+lr_fit <- lr_wf %>% fit(df_train)
+lr_fit
+```
+We have fit a preliminary predictive model based on logistic regression to ensure that our data is ready for modelling. From this model, we see warnings of fitted probabilities, NA coefficients and extremely large weights. These are indicative of severe multicollinearity. This aligns with our EDA and confirms that dimensionality reduction via PCA is required. 
+
+```{r modelling_step2}
+# Modelling Step 2: PCA dimensionality reduction.
+pca_recipe <- pp_recipe %>%
+  step_pca(all_numeric_predictors(), num_comp = tune())
+pca_recipe
+```
+From our EDA and preliminary model, we learned that PCA is required and has been added to the recipe. PCA will transform our 385 correlated features into a smaller set of uncorrelated principal components. We have set this number of components to be tuned as a hyperparameter.
+
+```{r modelling_step3}
+# Modelling Step 3a: Building Random Forest with PCA
+rf_model <- rand_forest(
+  mtry = tune(),
+  min_n = tune(),
+  trees = 500
+) %>%
+  set_mode("classification") %>%
+  set_engine("ranger")
+
+rf_wf <- workflow() %>%
+  add_recipe(pca_recipe) %>%
+  add_model(rf_model)
+rf_wf
+
+# Modelling Step 3b: Building Elastic Net Logistic Regression with PCA
+enet_model <- logistic_reg(
+  penalty = tune(),
+  mixture = tune()
+) %>%
+  set_mode("classification") %>%
+  set_engine("glmnet")
+
+enet_wf <- workflow() %>%
+  add_recipe(pca_recipe) %>%
+  add_model(enet_model)
+enet_wf
+```
+We have selected two candidate sophisticated models to test and decide on the better model. The selected models are Random Forest and Elastic Net Logistic Regression. They were selected due to their ability to work on high dimensional data.
+
+```{r modelling_step4}
+# Modelling Step 4: Grouped cross-validation to prevent data leakage
+set.seed(MY_STUDENT_ID)
+
+group_folds <- group_vfold_cv(
+  df_train,
+  group = Info_group,
+  v = 5
+)
+
+group_folds
+```
+To prevent data leakage we have used a 5-fold cross-validation, where folds are constructed using 'Info_group.
+
+```{r modelling_step5}
+# Modelling Step 5: Comparing Random Forest and Elastic Net
+
+# Simple PCA recipe without tuning
+simple_pca_recipe <- pp_recipe %>%
+  step_pca(all_numeric_predictors(), num_comp = 30)
+
+# 5a Simple Random Forest
+rf_model_simple <- rand_forest(
+  mtry  = 15,
+  min_n = 5,
+  trees = 500
+) %>%
+  set_mode("classification") %>%
+  set_engine("ranger")
+
+rf_wf_simple <- workflow() %>%
+  add_recipe(simple_pca_recipe) %>%
+  add_model(rf_model_simple)
+
+set.seed(MY_STUDENT_ID)
+rf_cv <- fit_resamples(
+  rf_wf_simple,
+  resamples = group_folds,
+  metrics = metric_set(f_meas)
+)
+
+rf_results <- collect_metrics(rf_cv)
+rf_results
+
+# 5b) Simple Elastic Net
+enet_model_simple <- logistic_reg(
+  penalty = 0.01,
+  mixture = 0.5
+) %>%
+  set_mode("classification") %>%
+  set_engine("glmnet")
+
+enet_wf_simple <- workflow() %>%
+  add_recipe(simple_pca_recipe) %>%
+  add_model(enet_model_simple)
+
+set.seed(MY_STUDENT_ID)
+enet_cv <- fit_resamples(
+  enet_wf_simple,
+  resamples = group_folds,
+  metrics = metric_set(f_meas)
+)
+
+enet_results <- collect_metrics(enet_cv)
+enet_results
+```
+On comparing Random Forest and Elastic Net, we see that Random Forest has an F1 score of approximately 0.767 while Elastic Net has an F1 score of approximately 0.739. This tells us that Random Forest performs better than Elastic Net and is selected as our model for next steps.
 
 *****
 
