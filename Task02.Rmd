@@ -335,37 +335,7 @@ pca_recipe
 From our EDA and preliminary model, we learned that PCA is required and has been added to the recipe. PCA will transform our 385 correlated features into a smaller set of uncorrelated principal components. We have set this number of components to be tuned as a hyperparameter.
 
 ```{r modelling_step3}
-# Modelling Step 3a: Building Random Forest with PCA
-rf_model <- rand_forest(
-  mtry = tune(),
-  min_n = tune(),
-  trees = 500
-) %>%
-  set_mode("classification") %>%
-  set_engine("ranger")
-
-rf_wf <- workflow() %>%
-  add_recipe(pca_recipe) %>%
-  add_model(rf_model)
-rf_wf
-
-# Modelling Step 3b: Building Elastic Net Logistic Regression with PCA
-enet_model <- logistic_reg(
-  penalty = tune(),
-  mixture = tune()
-) %>%
-  set_mode("classification") %>%
-  set_engine("glmnet")
-
-enet_wf <- workflow() %>%
-  add_recipe(pca_recipe) %>%
-  add_model(enet_model)
-enet_wf
-```
-We have selected two candidate sophisticated models to test and decide on the better model. The selected models are Random Forest and Elastic Net Logistic Regression. They were selected due to their ability to work on high dimensional data.
-
-```{r modelling_step4}
-# Modelling Step 4: Grouped cross-validation to prevent data leakage
+# Modelling Step 3: Grouped cross-validation to prevent data leakage
 set.seed(MY_STUDENT_ID)
 
 group_folds <- group_vfold_cv(
@@ -378,14 +348,16 @@ group_folds
 ```
 To prevent data leakage we have used a 5-fold cross-validation, where folds are constructed using 'Info_group'.
 
-```{r modelling_step5}
-# Modelling Step 5: Comparing Random Forest and Elastic Net
+We have selected two candidate sophisticated models to test and decide on the better model. The selected models are Random Forest and Elastic Net Logistic Regression. They were selected due to their ability to work on high dimensional data.
+```{r modelling_step4, cache = TRUE}
+# Modelling Step 4: Comparing Random Forest and Elastic Net
 
 # Simple PCA recipe without tuning
+# Setting num_comp = 30 to retain ~10% of numerical features and ensure RF's mtry=15 is tested fairly
 simple_pca_recipe <- pp_recipe %>%
   step_pca(all_numeric_predictors(), num_comp = 30)
 
-# 5a Simple Random Forest
+# 4a Simple Random Forest
 rf_model_simple <- rand_forest(
   mtry  = 15,
   min_n = 5,
@@ -408,7 +380,7 @@ rf_cv <- fit_resamples(
 rf_results <- collect_metrics(rf_cv)
 rf_results
 
-# 5b) Simple Elastic Net
+# 4b Simple Elastic Net
 enet_model_simple <- logistic_reg(
   penalty = 0.01,
   mixture = 0.5
@@ -432,6 +404,57 @@ enet_results
 ```
 On comparing Random Forest and Elastic Net, we see that Random Forest has an F1 score of approximately 0.767 while Elastic Net has an F1 score of approximately 0.739. This tells us that Random Forest performs better than Elastic Net and is selected as our model for next steps.
 
+```{r modelling_step5, cache=TRUE}
+# Modelling Step 5: Hyperparameter tuning for Random Forest Model
+
+rf_model <- rand_forest(
+  mtry = tune(),
+  min_n = tune(),
+  trees = 500
+) %>%
+  set_mode("classification") %>%
+  set_engine("ranger")
+
+rf_wf <- workflow() %>%
+  add_recipe(pca_recipe) %>%
+  add_model(rf_model)
+rf_wf
+
+rf_grid <- grid_regular(
+  mtry(range = c(5L, 20L)),
+  min_n(range = c(2L, 10L)),
+  num_comp(range = c(20L, 60L)),
+  levels = 2
+)
+
+set.seed(MY_STUDENT_ID)
+rf_tuned <- tune_grid(
+  rf_wf,
+  resamples = group_folds,
+  grid = rf_grid,
+  metrics = metric_set(f_meas)
+)
+
+show_best(rf_tuned, metric = "f_meas", n = 5)
+
+```
+We have defined a workflow that involves tuning 3 hyperparameters: mtry, min_n and num_comp. We also ensure we use grouped CV folds to prevent data leakage. The best configuration achieved an F1 score of 0.781 (std_error = 0.0196). Our hyperparameter tuning tells us that this configuration has: mtry = 5, min_n = 2 and num_comp = 60.
+
+We then finalize the workflow with these values and refit on the full training set to obtain our final model.
+```{r modelling_step6}
+# Modelling Step 6: Finalize the tuned Random Forest workflow
+best_rf <- select_best(rf_tuned, metric = "f_meas")
+
+final_rf_wf <- finalize_workflow(
+  rf_wf,
+  best_rf
+)
+
+# Fitting on full training data
+final_rf_fit <- final_rf_wf %>% fit(df_train)
+final_rf_fit
+```
+
 *****
 
 ## 4. Model assessment
@@ -444,6 +467,22 @@ This is a short section in which you must estimate the generalisation performanc
 Use your pipeline to generate predictions for your test set, and calculate the observed performance using the $F_1$-score as your main performance indicator. You can also additionally report other performance metrics if you think it's relevant.
 
 You can use as many code blocks as needed, but it's likely that this section can be completed with a single one. Make sure that your performance indicators are clearly echoed, so that a reader can easily check if after re-running your script. Add a short comment on the observed performance (is it good? Is it poor? Remember that you're not being assessed on the performance of your models, but on the soundness of your approach).
+
+```{r model_assessment}
+# Model Assessment: Testing pipeline on test set
+test_preds <- predict(final_rf_fit, new_data = df_test)
+test_probs <- predict(final_rf_fit, new_data = df_test, type = "prob")
+
+test_results <- df_test %>%
+  select(Class) %>%
+  bind_cols(test_preds, test_probs)
+
+test_metrics <- test_results %>%
+  metric_set(f_meas, accuracy)(truth = Class, estimate = .pred_class)
+test_metrics
+
+```
+The test metrics tell us that our model achieves an F1 score of 0.759 on the test set, close to the cross-validated estimate of ~0.78. This tells us that the model generalizes well.
 :::
 
 *****
@@ -471,6 +510,16 @@ Make sure that the data file __df_holdout.rds__ is placed in the same folder as 
 ## DO NOT CHANGE ANYTHING IN THIS CODE BLOCK
 df_holdout <- readRDS("df_holdout.rds")
 ```
+
+```{r model_deployment}
+holdout_preds <- predict(final_rf_fit, new_data = df_holdout)
+mypreds <- df_holdout %>%
+  select(Info_PepID, Info_pos) %>%
+  mutate(Predicted_class = holdout_preds$.pred_class)
+
+saveRDS(mypreds, "mypreds.rds")
+```
+The final model was successfully applied to the unlabeled holdout data and the predictions were saved to file mypreds.rds.
 
 *****
 *****

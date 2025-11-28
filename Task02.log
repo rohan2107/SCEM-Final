@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.2)  27 NOV 2025 13:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.2)  28 NOV 2025 15:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -697,31 +697,38 @@ Underfull \vbox (badness 10000) detected at line 1110
 [17]
 
 [18]
-Underfull \vbox (badness 10000) detected at line 1216
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1216
- []
-
-
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
+1183.
+(C:\Users\rohta\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmtt.fd
+File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
 
 [19]
+Underfull \vbox (badness 4913) detected at line 1310
+ []
+
+
 
 [20]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 1333.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 1333.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 1333.
+Overfull \vbox (0.73796pt too high) detected at line 1362
+ []
 
 
-[21{C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.e
+
+[21]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 1379.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 1379.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 1379.
+
+
+[22{C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.e
 nc}{C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}]
 
 
-[22] (Task02.aux)
+[23] (Task02.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-08-13>
@@ -731,13 +738,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 14022 strings out of 468133
- 221207 string characters out of 5430713
+ 14068 strings out of 468133
+ 221992 string characters out of 5430713
  747171 words of memory out of 5000000
- 42283 multiletter control sequences out of 15000+600000
- 677493 words of font info for 138 fonts, out of 8000000 for 9000
+ 42320 multiletter control sequences out of 15000+600000
+ 677966 words of font info for 141 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 83i,6n,93p,1005b,523s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 83i,6n,93p,1005b,490s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
 b><C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pf
 b><C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pf
@@ -750,9 +757,9 @@ C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:
 /Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtko10.pfb><C
 :/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C
 :/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Task02.pdf (22 pages, 377419 bytes).
+Output written on Task02.pdf (23 pages, 384556 bytes).
 PDF statistics:
- 216 PDF objects out of 1000 (max. 8388607)
- 36 named destinations out of 1000 (max. 500000)
+ 226 PDF objects out of 1000 (max. 8388607)
+ 37 named destinations out of 1000 (max. 500000)
  26686 words of extra memory for PDF output out of 29859 (max. 10000000)
 
