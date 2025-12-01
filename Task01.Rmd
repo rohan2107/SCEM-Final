@@ -140,7 +140,6 @@ Your data frame `myres` should have (nruns x number of methods) rows.
 set.seed(MY_STUDENT_ID) ## <--- DO NOT CHANGE THIS LINE
 
 # ADD YOUR CODE HERE
-my.problem <- (paste0("Prob.", MY_STUDENT_ID, ".999"))
 nmethods <- length(method.names)
 myres <- data.frame(Method = character(exp_pars$nruns * nmethods),
                     Value = numeric(exp_pars$nruns * nmethods))
@@ -306,8 +305,6 @@ Perform a post-hoc Tukey test, using the multcomp package. Store the object retu
 
 ```{r Q1_1_f_mcp}
 # ADD YOUR CODE HERE
-library(multcomp)
-
 myMHT1 <- glht(mytest01, linfct = mcp(Method = "Tukey"))
 summary(myMHT1)
 
@@ -410,7 +407,7 @@ Provide a brief comment (up to 150 words) on whether the best method (in terms o
 :::
 
 :::{#Q1_1_g_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
-The method with the smallest estimated mean log-loss, DE.2704500.A, is recommended as the reference method for further experiments. Method A was found to be significantly better than the second-best method, DE.2704500.D at the alpha = 0.04 significance level. This is confirmed because the Tukey-adjusted confidence interval for the difference between A and D does not include zero. The magnitude of the observed effect size (Cohen's d) is approximately 3.47, which is significantly greater than the minimally relevant effect size of 0.75. Therefore, the performance difference between DE.2704500.A and DE.2704500.D is considered statistically significant.
+The method with the smallest estimated mean log-loss, DE.2704500.A, is recommended as the reference method for further experiments. Method A was found to be significantly better than the second-best method, DE.2704500.D at the alpha = 0.04 significance level. This is confirmed because the Tukey-adjusted confidence interval for the difference between A and D does not include zero. The magnitude of the observed effect size (Cohen's d) is approximately 3.47, which is significantly greater than the minimally relevant effect size of 0.75. Therefore, the performance difference between DE.2704500.A and DE.2704500.D is both statistically significant and practically relevant.
 
 :::
 
@@ -620,9 +617,9 @@ Based on your results, which of the methods would recommend as the selected stra
 :::{#Q1_2_f_txt .message style="color: black; border: 1px outset black; background-color: #eeeffe;"}
 Based on the results of our generalized experiment across the class of test problems, the recommended strategy is DE.2704500.E. This method has the smallest estimated mean log-loss across all problems and repeated runs and is therefore the best performing method overall.
 
-Compared with the results of the preliminary test, this is not the same method we identified previously (DE.2704500.A). While A was the best method for the single problem type we tested on, this does not hold true when the scope of problems is broadened.
+Compared with the results of the preliminary test, this is not the same method we identified previously (DE.2704500.A). While A was the best method for the single problem type we tested on, this does not hold true when the scope of problems is broadened. The Dunnett CIs for the comparison between E and A does not include 0, telling us that E is statistically better than A at the alpha = 0.04 level.
 
-If we had to choose a second best algorithm, our results would point us to DE.2704500.D, which had the next lowest mean loss after E.
+If we had to choose a second best algorithm, our results would point us to DE.2704500.D, which had the next lowest mean loss after E. The Dunnett comparision between D and A also does not include zero, confirming D is also significantly better than A. However, the difference between D and E is substantial.
 
 Overall, DE.2704500.E is the method that produced the lowest estimated log-loss across all problems and is therefore the recommended strategy.
 
