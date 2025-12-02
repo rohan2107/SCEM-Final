@@ -31,6 +31,16 @@ output: html_document
 #' Required plots: 
 ```
 
+```{r}
+#' Required variables: my.problem
+#' Required plots: 
+```
+
+```{r}
+#' Required variables: 
+#' Required plots: 
+```
+
 ```{r Q1_1_b}
 #' Required variables: myres (data.frame)
 #' Required plots: 
@@ -95,6 +105,11 @@ output: html_document
 
 ```{r gen_problems, echo = FALSE}
 #' Required variables: problems (list); problem.names (character)
+#' Required plots: 
+```
+
+```{r}
+#' Required variables: 
 #' Required plots: 
 ```
 
