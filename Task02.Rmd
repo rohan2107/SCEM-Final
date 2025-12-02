@@ -259,8 +259,6 @@ data_split <- group_initial_split(df, group = Info_group, prop = 0.8)
 df_train <- training(data_split)
 df_test <- testing(data_split)
 
-length(intersect(df_train$Info_group, df_test$Info_group))
-
 ```
 
 In the construction of our recipe we note from EDA:
@@ -484,7 +482,7 @@ test_metrics <- test_results %>%
   metric_set(f_meas, accuracy)(truth = Class, estimate = .pred_class)
 test_metrics
 ```
-The test metrics tell us that our model achieves an F1 score of 0.767 on the test set, close to the cross-validated estimate of 0.787. This tells us that the model generalizes well.
+The Factor levels for Class remain in their original order (-1, 1). As a result, yardstick treats -1 as the positive class while computing the F1 score. The test metrics tell us that our model achieves an F1 score of 0.767 on the test set, close to the cross-validated estimate of 0.787. This tells us that the model generalizes well.
 
 :::
 

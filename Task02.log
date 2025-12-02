@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.2)  28 NOV 2025 18:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.2)  2 DEC 2025 12:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -673,11 +673,11 @@ Overfull \vbox (0.37418pt too high) detected at line 814
 [13]
 
 [14]
-Underfull \vbox (badness 10000) detected at line 985
+Underfull \vbox (badness 10000) detected at line 982
  []
 
 
-Underfull \vbox (badness 10000) detected at line 985
+Underfull \vbox (badness 10000) detected at line 982
  []
 
 
@@ -685,11 +685,11 @@ Underfull \vbox (badness 10000) detected at line 985
 [15]
 
 [16]
-Underfull \vbox (badness 10000) detected at line 1115
+Underfull \vbox (badness 10000) detected at line 1112
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1115
+Underfull \vbox (badness 10000) detected at line 1112
  []
 
 
@@ -698,13 +698,17 @@ Underfull \vbox (badness 10000) detected at line 1115
 
 [18]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-1188.
+1185.
 (C:\Users\rohta\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
+Overfull \vbox (0.7947pt too high) detected at line 1242
+ []
+
+
 
 [19]
-Underfull \vbox (badness 4913) detected at line 1315
+Underfull \vbox (badness 4913) detected at line 1312
  []
 
 
@@ -713,11 +717,11 @@ Underfull \vbox (badness 4913) detected at line 1315
 
 [21]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 1390.
+(Font)              <10> on input line 1387.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 1390.
+(Font)              <7> on input line 1387.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 1390.
+(Font)              <5> on input line 1387.
 
 
 [22{C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.e
@@ -753,7 +757,7 @@ C:/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:
 /Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtko10.pfb><C
 :/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C
 :/Users/rohta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Task02.pdf (23 pages, 384976 bytes).
+Output written on Task02.pdf (23 pages, 384970 bytes).
 PDF statistics:
  226 PDF objects out of 1000 (max. 8388607)
  37 named destinations out of 1000 (max. 500000)
